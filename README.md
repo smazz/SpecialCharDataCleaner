@@ -2,7 +2,7 @@
 <i>This is a resting Flask app that will remove problematic characters from data with different schemas</i>
 
 <br />
-This app is built for use on Windows and you can use the PyInstaller
+This app is built for use on Windows and you can use PyInstaller
 to create an EXE so it can function as rest app locally. 
 
 The purpose of the app is to cleanse large data files of problematic characters
