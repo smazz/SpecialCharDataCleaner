@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Special Character Data Cleanser</title>
+    </head>
+    <body>
+      <p style="top: 5px; right: 5px; position: absolute; color:#4d4d4d ; font-size: 10px;" >
+        https://github.com/smazz<br/>
+      </p>
+      <h4>Before you begin:</h4>
+      <ul>
+        <li>Is your file saved as a csv?</li>
+        <li>Do you know what row the header is in?</li>
+        <li>When you are finished, be sure to close out of the command prompt</li>
+      </ul>
+      <br/>
+      <!--Input File Selector-->
+      <h3>Step 1</h3>
+        <p>Select the file you'd like to cleanse</p>
+         <form action="" method="post" enctype="multipart/form-data">
+            <input type="file" id="myFile" name="file" accept=".csv"/>
+            <p>{{InSkipRow}}</p>
+            <input type="text" id="skip" name="skiprow" pattern="[\d]" title="Enter an Integer"/>
+            <!--Enter Characters to cleanse with regex to only accept single characters sperated by a space-->
+            <p>{{InChars}}</p>
+            <input type="text" id="SpecChars" name="Chars" pattern="[\W]{1}|[\W]{1}.*[\s]|[\W]{1}.*[\s][\W]{1}|[\s].*[\W]{1}" title="Enter is the characters you would like replaced separated with a space (ie: $ # , & !)"/>
+            <p style="margin: 1px">Select how you would like to replace the special characters:</p>
+            <p style="font-size: 12px; margin: 0px">(Note: Any non-alpanumeric characters will replaced by underscores in the header regardless of selections)</p>
+            <!--Radio button to select whether to delete special chars or replace with _ -->
+            <br/>
+            <input type="radio" id="Blank" name="RepChar" value="Blank">
+            <label for="Blank">Delete Selected Characters</label><br>
+            <input type="radio" id="UnderSc" name="RepChar" value="UnderSc">
+            <label for="UnderSc">Replace Characters with an Underscore</label><br/><br/><br/>
+            <input type="submit" />
+          </form>
+          <br/>
+          <!--Lists the Characters the usuer input-->         
+          <p>{{CPrint}}</p>
+
+          <h3>Step 2</h3>
+          <p>
+          <!--Lists the column header of the selected file with check boxes-->    
+            <form action="" method="post" onsubmit="formSubmit()">
+              <p>Check the columns you would like to cleanse:</p>
+              <table class="table is-striped is-fullwidth" name="tab">
+                {% for c in cols %}
+                <tr>
+                  <td><input type=checkbox name="cols[]" value="{{c}}"></td>
+                  <td>{{ c }}</td>               
+                </tr>
+                {% endfor %}
+              </table>
+              <!--Input to name file with regex to include only alpha numeric. File type is hard coded in App as CSV
+               since that is desired output, but we could add a bit of code here to allow the user to select a file type-->  
+              <p>What would like to name the Cleansed File?:
+                <input type="text" id="SaveName" name="NameSave" pattern="[a-zA-Z0-9_]+" title="Alpha Numeric Only. Do no include .csv or any special characters" />
+              </p>
+                
+              </p>
+              <br/> 
+                
+              <input type="submit" />
+            <!--A pop up alert to let the use know the form was submited. Smaller requests that seconds or less,
+              but larger data sets with more replacements may take longer--> 
+            </form>
+            <script>
+              function formSubmit() {
+                alert("The form was submitted. Processing can take a few minutes; longer for very large files and requests. Don't hit submit more than once.");
+              }
+              </script>
+          </p>
+
+          <h3>Output:</h3>
+          <!--Prints where the file is saved. Currently set to save in the same folder as the exe-->
+          <h5>{{printFN}}</h5>
+          <!--Since all non-alpha numeric chars are replaced by _ it lists the new column headers,
+            which are saved in the first row -->
+          <p>
+            <h4>{{colstr}}</h4>
+            {% for col in colhead %} 
+              {{col}} <br/>
+            {% endfor %}
+          
+            </p>
+
+            <!--Prints the count of all the characters found and replaced in each column 
+              an lists the character and the column it was found in-->
+            <h4>{{rstring}}</h4>
+          <p>
+          {% for para in PrintOut %} 
+            {{para}} <br/>
+          {% endfor %}
+          </p>
+
+          
+         
+          
+    </body>
+</html>
