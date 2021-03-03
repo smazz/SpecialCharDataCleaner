@@ -1,7 +1,7 @@
 # SpecialCharDataCleaner
 *This is a resting Flask app that will remove problematic characters from data with different schemas*
 
-<br />
+
 This app is built for use on Windows and you can use PyInstaller
 to create an EXE so it can function as rest app locally. 
 
@@ -16,7 +16,7 @@ It replaces all Non-Alpha numeric characters in the headers
 Then is saves the cleansed file & creates an output outlining which special characters 
 were removed or replaced & lists the new column headers.
 
-<br />
+
 **To make into an executable file install the latest version of PyInstaller and use the following:**
 
 `PyInstaller  -F --icon=YourLogo.ico  --add-data "C:\Users\RESTOFPATH\;templates" app.py --name Your_Name`
